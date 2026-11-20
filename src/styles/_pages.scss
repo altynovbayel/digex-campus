@@ -3,12 +3,14 @@
 /* Авторизация */
 .auth {
   min-height: 100vh;
+  min-height: 100dvh;
   max-width: 1180px;
   margin: 0 auto;
   padding: 32px 40px 48px;
 
   @include below($bp-md) {
-    padding: 20px 16px 32px;
+    padding: max(20px, var(--safe-top)) max(16px, var(--safe-right)) max(32px, var(--safe-bottom))
+      max(16px, var(--safe-left));
   }
 
   &--narrow {
@@ -50,6 +52,11 @@
     font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 1.1;
+    overflow-wrap: anywhere;
+
+    @include below($bp-sm) {
+      font-size: clamp(24px, 8vw, 28px);
+    }
   }
 
   &__card {
@@ -362,6 +369,7 @@
 
 .lesson-list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 10px;
 }
 
@@ -389,6 +397,8 @@
 
   &__body {
     display: grid;
+    /* Колонка может быть уже самого длинного слова названия — оно переносится. */
+    grid-template-columns: minmax(0, 1fr);
     flex: 1;
     min-width: 0;
   }
@@ -399,6 +409,7 @@
 
   &__meta {
     display: inline-flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 6px;
     font-size: 13px;
@@ -461,6 +472,7 @@
 
 .lesson {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 24px;
   max-width: 880px;
 
@@ -471,6 +483,8 @@
 
 .prose {
   display: grid;
+  /* Колонка может быть уже длинной строки без пробелов (URL) — она переносится, а не расширяет страницу. */
+  grid-template-columns: minmax(0, 1fr);
   gap: 14px;
   font-size: 16px;
   line-height: 1.75;
@@ -594,8 +608,11 @@
 
   dd {
     margin: 0;
+    min-width: 0;
     font-weight: 500;
     text-align: right;
+    /* Длинный email или название сжимают значение, а не подпись слева. */
+    overflow-wrap: anywhere;
   }
 }
 

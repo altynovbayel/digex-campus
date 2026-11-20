@@ -18,6 +18,9 @@ body {
   color: var(--text);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
+  /* Длинные слова и адреса (email, ссылки) переносятся, когда не помещаются в строку. Минимальную ширину
+     содержимого это не меняет — где flex/grid-элемент должен сжиматься, задано min-width: 0 или anywhere локально. */
+  overflow-wrap: break-word;
 }
 
 h1,
@@ -76,7 +79,9 @@ textarea {
   text-decoration: none;
 
   &:focus {
-    top: 16px;
+    /* С учётом выреза и скруглений iPhone (viewport-fit=cover). */
+    top: max(16px, var(--safe-top));
+    left: max(16px, var(--safe-left));
   }
 }
 
