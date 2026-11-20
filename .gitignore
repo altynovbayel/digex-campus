@@ -1,0 +1,26 @@
+node_modules
+dist
+.DS_Store
+
+# Локальные переменные окружения и секреты (шаблон .env.example остаётся в Git)
+.env
+.env.*
+!.env.example
+*.local
+
+# Локальные файлы Supabase CLI
+supabase/.temp
+supabase/.branches
+
+# Отчёты и логи независимого ревью Codex
+reports/
+*.log
+
+# Скриншоты и снимки экрана (материалы обсуждения, не исходники)
+/Снимок экрана*.png
+/Screenshot*.png
+/Screen Shot*.png
+
+# Разовые задания отдельных запусков Codex; в Git остаётся только задание по умолчанию
+.codex/*
+!.codex/review-prompt.md
