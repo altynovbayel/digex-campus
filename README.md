@@ -91,6 +91,28 @@ npm run build      # production-сборка в dist/
    Встроенная почта Supabase имеет жёсткие лимиты отправки — для реальной работы подключите собственный SMTP.
 6. Перезапустите `npm run dev`.
 
+## Деплой на Vercel
+
+Конфигурация — в `vercel.json`: сборка Vite (`npm ci`, `npm run build`, папка `dist`), переход на `index.html`
+для маршрутов React Router при прямом открытии и обновлении страницы (файлы сборки отдаются как есть),
+долгий кэш для `/assets/*` и базовые заголовки безопасности. Версия Node — `engines` в `package.json` (24.x).
+
+1. Vercel → Add New → Project → импорт репозитория `digex-campus` (настройки сборки подтянутся из `vercel.json`).
+2. **Environment Variables** (Production и Preview):
+   - `VITE_SUPABASE_URL` — Project URL проекта digex-campus;
+   - `VITE_SUPABASE_PUBLISHABLE_KEY` — **только** publishable-ключ (`sb_publishable_…`);
+   - `VITE_DEMO_MODE` — `false` (в production-сборке демо-режим выключен в коде при любом значении).
+
+   Secret key / service_role в Vercel не добавлять: всё с префиксом `VITE_` попадает в браузер,
+   а сборка остановится, если найдёт секретный ключ.
+3. **Supabase → Authentication → URL Configuration** (после того как известен адрес сайта):
+   - **Site URL** — основной адрес сайта, например `https://digex-campus.vercel.app`;
+   - **Redirect URLs** — `https://digex-campus.vercel.app/**` (подтверждение почты ведёт на `/`,
+     восстановление пароля — на `/reset-password`); адреса локальной разработки оставить.
+
+   Письма ведут на адрес, с которого отправлен запрос (`window.location.origin`). Если адреса нет в списке,
+   Supabase подставит Site URL.
+
 ## Назначение администратора
 
 Первый зарегистрированный пользователь администратором **не становится** — все новые аккаунты получают роль `student`.

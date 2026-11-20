@@ -12,6 +12,9 @@
     "review:codex": "bash scripts/codex-review.sh",
     "verify": "npm run typecheck && npm run lint && npm run build && npm run review:codex"
   },
+  "engines": {
+    "node": "24.x"
+  },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.0",
     "lucide-react": "^1.73.0",
